@@ -6,6 +6,7 @@ public class PlayerBehaviour : MonoBehaviour
 {
 
     public float movementSpeed;
+    public GameObject prefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,4 +42,27 @@ public class PlayerBehaviour : MonoBehaviour
             transform.position += new Vector3(0, 0, 50); 
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        int count = 0;
+        if (collision.gameObject.name == "Punto")
+        {
+            count++;
+        }
+        if (collision.gameObject.name == "Ghost")
+        {
+            Destroy(gameObject);
+            int a = 0;
+            while (a < count)
+            {
+                GameObject clon;
+                clon = Instantiate(prefab);
+                clon.transform.position = gameObject.transform.position;
+                a++;
+            }
+        }
+    }
+
+
 }
