@@ -5,21 +5,23 @@ using UnityEngine.UI;
 
 public class Puntuacion : MonoBehaviour
 {
-    public GameObject puntos;
-    public GameObject player;
     int puntuacion = 0;
     public Text textoPuntuacion;
+    public GameObject panel;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        panel.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+      if (puntuacion == 246)
+        {
+            panel.gameObject.SetActive(true);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,7 +31,7 @@ public class Puntuacion : MonoBehaviour
             puntuacion++;
         }
         textoPuntuacion.text = puntuacion.ToString();
-
+        
 
     }
 }

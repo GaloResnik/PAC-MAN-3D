@@ -8,22 +8,28 @@ public class Timer : MonoBehaviour
     public Text txtMuestratiempo;
     float currentTime;
     public GameObject player;
+    public GameObject panel;
+    int count = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        panel.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         currentTime = Time.timeSinceLevelLoad;
-        txtMuestratiempo.text = (100 - Mathf.Floor(currentTime)).ToString();
-        if (currentTime == 100)
+        if (player)
+        {
+            txtMuestratiempo.text = (80 - Mathf.Floor(currentTime)).ToString();
+        }
+
+        if (currentTime >= 80 && count <245)
         {
             Destroy(player);
-            //Mostrar texto de que perdiste
+            panel.gameObject.SetActive(true);
         }
     }
 }

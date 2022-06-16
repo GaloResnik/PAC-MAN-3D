@@ -5,7 +5,8 @@ using UnityEngine;
 public class instantiateDeath : MonoBehaviour
 {
     public GameObject prefab;
-    public GameObject deathPoint;
+    public GameObject spawnPoint;
+    public int a = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,21 +16,15 @@ public class instantiateDeath : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name == "Ghost")
+        if (!spawnPoint)
         {
-            Destroy(gameObject);
-            int a = 0;
-            while (a < 10)
+            while (a < 2)
             {
-                GameObject clon;
-                clon = Instantiate(prefab);
-                clon.transform.position = deathPoint.transform.position;
+                prefab.transform.position = spawnPoint.transform.position;
+                Instantiate(prefab);
+                a++;
             }
         }
     }
+
 }

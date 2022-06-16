@@ -7,15 +7,21 @@ public class PlayerBehaviour : MonoBehaviour
 
     public float movementSpeed;
     public GameObject prefab;
+    public AudioClip eatSound;
+    AudioSource fuenteAudio;
+    public GameObject panel;
+    public int count = 0;
     // Start is called before the first frame update
     void Start()
     {
-        
+        panel.gameObject.SetActive(false);
+        fuenteAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //MOVIMIENTO DEL JUGADOR
         if(Input.GetKey(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             transform.position += new Vector3(movementSpeed, 0, 0);
@@ -33,6 +39,7 @@ public class PlayerBehaviour : MonoBehaviour
             transform.position -= new Vector3(0, 0, movementSpeed);
         }
 
+        //TP A LOS COSTADOS DEL MAPA
         if (transform.position.z > 30)
         {
             transform.position += new Vector3(0, 0, -50);
@@ -45,22 +52,27 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        int count = 0;
-        if (collision.gameObject.name == "Punto")
+        //CONTADOR DE PUNTOS
+        
+        if (collision.gameObject.name == "Puntos")
         {
             count++;
+            fuenteAudio.clip = eatSound;
+            fuenteAudio.Play();
         }
+
+        //DESTUYE OBJETO POR FANTASMA
         if (collision.gameObject.name == "Ghost")
         {
-            Destroy(gameObject);
             int a = 0;
             while (a < count)
             {
-                GameObject clon;
-                clon = Instantiate(prefab);
-                clon.transform.position = gameObject.transform.position;
+                prefab.transform.position = gameObject.transform.position;
+                Instantiate(prefab);
                 a++;
             }
+            Destroy(gameObject);
+            panel.gameObject.SetActive(true);
         }
     }
 
